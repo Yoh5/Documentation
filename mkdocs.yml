@@ -1,0 +1,9 @@
+site_name: Rtype_Documentation
+repo_url: https://rtype-docu.com
+nav:
+  - Home: Home.md
+  - Compiling and Running: Compile_and_Run.md
+  - About: About.md
+  - Client: Client.md
+  - Server: Server.md
+theme: readthedocs
