@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>How to use Engine based on ECS - Rtype_Documentation</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "How to use Engine based on ECS";
+        var mkdocs_page_input_path = "How_to_use_Engine_based_on_ECS.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Rtype_Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Compile_and_Run/">Compiling and Running</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">How to use Engine based on ECS</a>
+    <ul class="current">
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../About/">About</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Client/">Client</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Server/">Server</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Rtype_Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">How to use Engine based on ECS</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h2 id="how-it-works">How it works</h2>
+<p>Our Engine is based on ECS (Entity Component System) and actually is used both on Client and Server. </p>
+<p>`
+enum SYSTEM_TAG
+{
+    render,
+    event,
+    network,
+    update,
+    user_handling,
+    move,
+    shots,
+    destruction,
+};</p>
+<p>class registry
+{
+public:
+    using system = std::function<void(registry &)>;
+    using sparseArrayMap = std::unordered_map<std::type_index, std::any>;
+    using systems = std::vector<std::pair\<system, SYSTEM_TAG>>;</p>
+<pre><code>registry()
+{
+    state = 0;
+}
+/*------------------------------------------&gt;Start Component Management &lt;-----------------------------------------------------------*/
+template &lt;class Component&gt;
+void register_component()
+{
+    _components_arrays[std::type_index(typeid(Component))] = std::any(sparse_array&lt;Component&gt;());
+}
+
+template &lt;typename Component&gt;
+sparse_array&lt;Component&gt; &amp;get_components()
+{
+    if (_components_arrays.find(std::type_index(typeid(Component))) == 0) {
+        std::cerr &lt;&lt; "Component type you try to get not exist" &lt;&lt; std::endl;
+        throw std::exception();
+    }
+    return std::any_cast&lt;sparse_array&lt;Component&gt; &amp;&gt;(_components_arrays[std::type_index(typeid(Component))]);
+}
+
+template &lt;typename Component&gt;
+Component &amp;get_component(entity entt)
+{
+    if (_components_arrays.find(std::type_index(typeid(Component))) == 0)
+    {
+        std::cerr &lt;&lt; "Component type you try to get not exist" &lt;&lt; std::endl;
+        throw std::exception();
+    }
+    return *(std::any_cast&lt;sparse_array&lt;Component&gt; &amp;&gt;(_components_arrays[std::type_index(typeid(Component))]))[entt];
+}
+
+template &lt;typename Component&gt;
+void attach_component(entity entt, Component component)
+{
+    if (_components_arrays.find(std::type_index(typeid(Component))) == 0)
+    {
+        std::cerr &lt;&lt; "Component type you try to insert not exist" &lt;&lt; std::endl;
+        throw std::exception();
+    }
+    std::any_cast&lt;sparse_array&lt;Component&gt; &amp;&gt;(_components_arrays[std::type_index(typeid(Component))]).insert_at(entt, component);
+}
+
+template &lt;typename... Args&gt;
+void attach_components(entity entt, Args... args)
+{
+    ((attach_component(entt, args)), ...);
+}
+
+template &lt;class Component&gt;
+void detach_component(entity entt, Component component)
+{
+    std::any_cast&lt;sparse_array&lt;Component&gt; &amp;&gt;(_components_arrays[std::type_index(typeid(Component))]).erase(entt);
+}
+
+template &lt;typename... Args&gt;
+void detach_components(entity entt, Args... args)
+{
+    ((detach_component(entt, args)), ...);
+}
+/*------------------------------------------&gt;End Component Management &lt;-----------------------------------------------------------*/
+
+/*------------------------------------------&gt;Start Entity Management &lt;-----------------------------------------------------------*/
+entity spawn_entity()
+{
+    entity id;
+    if (!killed.empty())
+    {
+        id = killed.back();
+        killed.pop_back();
+        return id;
+    }
+    id = (_entities.empty()) ? entity(0) : entity(_entities.back() + 1);
+    _entities.push_back(id);
+    return id;
+}
+
+void kill_entity(entity entt)
+{
+        killed.push_back(entt);
+}
+int entities() const { return _entities.size(); }
+
+template &lt;typename type&gt;
+static bool contains(std::vector&lt;type&gt; list, type element)
+{
+    return (std::find(list.begin(), list.end(), element) != list.end());
+}
+/*------------------------------------------&gt;End Entity Management &lt;-----------------------------------------------------------*/
+
+/*------------------------------------------&gt;Start System Management &lt;-----------------------------------------------------------*/
+void add_system(system const &amp;f, SYSTEM_TAG tag)
+{
+    _systems.push_back(std::make_pair(f, tag));
+}
+
+void run_systems(SYSTEM_TAG tag)
+{
+    for (auto const &amp;_sys : _systems)
+    {
+        if (_sys.second == tag)
+            _sys.first(*this);
+    }
+}
+/*------------------------------------------&gt;End Systems Management &lt;-----------------------------------------------------------*/
+bool isEntityUnusable(entity id)
+{
+    return std::find(killed.begin(), killed.end(), id) != killed.end();
+}
+void setState(int state)
+{
+    this-&gt;state = state;
+}
+int getState(void) const
+{
+    return state;
+}
+</code></pre>
+<p>The main logic of ECS is based on the addition of components and customized systems, where all components of the same type are grouped together in a container. In this way, systems can more easily retrieve all the components on which they act, independently of the entities with which they are associated. This results in a consequent optimization of the program. </p>
+<ul>
+<li>To add a new component type, execute the <code>register_component</code> function. </li>
+<li>To create an entity, execute <code>spawn_enity</code>. </li>
+<li>And when you want to attach a component to the entity you've created, you execute <code>attach_component</code>.</li>
+</ul>
+<p>Here's an example:</p>
+<ul>
+<li><code>core.register_component&lt;COMPONENT::Drawable&gt;()</code></li>
+<li><code>core.register_component&lt;COMPONENT::State&gt;();</code></li>
+<li>
+<p><code>core.register_component&lt;COMPONENT::Transformable&gt;();</code></p>
+</li>
+<li>
+<p><code>core.add_system(SYSTEM::render, SYSTEM_TAG::render);</code></p>
+</li>
+<li>
+<p><code>core.add_system(SYSTEM::manageTransformation, SYSTEM_TAG::update);</code></p>
+</li>
+<li>
+<p><code>core.attach_components(background, COMPONENT::Drawable(std::make_shared&lt;sf::Sprite&gt;(sf::Sprite(textures[0])))), COMPONENT::Transformable(sf::Vector2f(0, 0)), COMPONENT::State(0));</code></p>
+</li>
+</ul>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../Compile_and_Run/" class="btn btn-neutral float-left" title="Compiling and Running"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../About/" class="btn btn-neutral float-right" title="About">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../Compile_and_Run/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../About/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
