@@ -52,6 +52,10 @@
                 </li>
               </ul>
               <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Engine/">BJEngine</a>
+                </li>
+              </ul>
+              <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../About/">About</a>
                 </li>
               </ul>
@@ -61,8 +65,6 @@
               </ul>
               <ul class="current">
                 <li class="toctree-l1 current"><a class="reference internal current" href="./">Server</a>
-    <ul class="current">
-    </ul>
                 </li>
               </ul>
       </div>
@@ -88,19 +90,94 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h2 id="what-its-all-about">What it's all about</h2>
-<p>It enables game interaction so that multiple players can connect</p>
-<p>The customer has the:</p>
-<ul>
-<li>customer login and logout</li>
-<li>serialize and deserialize data sent and received</li>
-<li>compression of sent and received data</li>
-<li>integration of ECS with server</li>
-</ul>
-<h2 id="how-it-works">How it works</h2>
-<ul>
-<li>Run the executable <code>r-type_server</code> on Linux and <code>r-type_server.exe</code> on Windows</li>
-</ul>
+                <p>About our server code based on the ECS architecture and game loop implementation.</p>
+<ol>
+<li><strong>ECS Architecture Implementation:</strong></li>
+<li>The ECS is dynamically registering components for entities when a new player is added to the room. While this is flexible, it might introduce runtime overhead. Typically, components are registered once, during system initialization, not per entity.</li>
+<li>
+<p>Entities are assigned components such as <code>transform</code>, <code>velocity</code>, and <code>controlable</code>. Each of these components should be lightweight and only contain data. Logic is processed in systems, which operate on entities that have a specific set of components.</p>
+</li>
+<li>
+<p><strong>Networking and Concurrency:</strong></p>
+</li>
+<li>The server uses asynchronous I/O for networking, which is a good approach for scalability. However, the shared resources, such as the <code>rooms</code> map, must be properly synchronized to prevent race conditions.</li>
+<li>
+<p>The use of a thread pool suggests that the server is designed to handle tasks concurrently. However, task scheduling and proper synchronization are crucial to prevent deadlocks and ensure thread safety.</p>
+</li>
+<li>
+<p><strong>Game Loop and Timing:</strong></p>
+</li>
+<li>The game loop runs a series of checks in a while loop, processing messages, updating game state, and sending updates to players at an 80ms interval. This timing mechanism is crucial to maintain a consistent state across the network.</li>
+<li>
+<p>The server handles game cycles and manages state transitions (e.g., from running to game-over). However, it's not clear how it manages varying network latencies and time discrepancies between clients, which is critical for a multiplayer game.</p>
+</li>
+<li>
+<p><strong>Resource Management:</strong></p>
+</li>
+<li>The server creates and deletes rooms dynamically. This requires efficient resource management to prevent memory leaks. C++ smart pointers are used, which is a good practice, but there should also be proper handling for other non-memory resources like network sockets.</li>
+<li>
+<p>The code indicates cleanup by erasing rooms, but it’s vital to ensure that all resources are released properly, including shutting down any associated threads cleanly.</p>
+</li>
+<li>
+<p><strong>Game State Management:</strong></p>
+</li>
+<li>The game state is tracked using various variables and is checked periodically within the game loop. There is logic to determine if a game is won or lost, but the conditions for winning or losing are not detailed. It would be important to define and handle these conditions clearly.</li>
+<li>
+<p>There's a potential issue with how the game checks for player life (<code>nbPAlive</code>). If multiple threads are modifying this value, there must be proper synchronization to prevent undefined behavior.</p>
+</li>
+<li>
+<p><strong>Security and Fair Play:</strong></p>
+</li>
+<li>An IP ban list (<code>bannedIp</code>) is a basic approach to prevent malicious users from connecting. However, IP bans are easily circumvented and don't handle in-game cheating. Implementing more sophisticated cheat detection and prevention mechanisms would be beneficial.</li>
+<li>
+<p>Security measures such as validating player actions to prevent cheating and verifying message integrity to protect against tampering should be considered.</p>
+</li>
+<li>
+<p><strong>Logging and Monitoring:</strong></p>
+</li>
+<li>While the server does log to <code>std::cout</code>, for a production environment, it's important to have a more robust logging system that can handle different log levels and output to files or logging services.</li>
+<li>
+<p>Monitoring metrics like <code>totalPacketsSent</code> and <code>totalPacketsReceived</code> is a good practice, but there should also be metrics for performance monitoring, such as average response time, server load, and more.</p>
+</li>
+<li>
+<p><strong>Error Handling:</strong></p>
+</li>
+<li>Error handling is notably absent in the provided snippets. In a robust server, you would expect to see try-catch blocks, especially around I/O operations, to gracefully handle exceptions.</li>
+<li>
+<p>Networking code should handle various failure scenarios, such as client disconnections, timeouts, and malformed packets.</p>
+</li>
+<li>
+<p><strong>Scalability and Performance:</strong></p>
+</li>
+<li>The server’s scalability is limited by the <code>maxRoom</code> count. To truly scale, the architecture could be designed to distribute rooms across multiple servers or dynamically allocate resources based on demand.</li>
+<li>
+<p>For performance, the systems within the ECS should be optimized for cache coherency, minimizing overhead when iterating over entities and components.</p>
+</li>
+<li>
+<p><strong>Admin Client Session</strong></p>
+</li>
+<li>This section outlines the implementation and functionality of the Admin Client Panel within the R-Type TCP Protocol. The panel is intended for administrative users to manage and interact with the server in a controlled environment.</li>
+</ol>
+<p>###   Startup Sequence:</p>
+<pre><code>  - The Admin Server is initiated with a welcoming message, "Starting Admin Server...", followed by the instantiation of the Net::AdminServer object on port 5557. The server attempts to establish a connection to the main server using provided command-line arguments, which should represent the IP address and port number, respectively. If the connection fails, an error message is displayed, and the program exits.
+</code></pre>
+<p>###   Command-Line Interface (CLI):</p>
+<pre><code>  - The Admin Panel provides a command-line interface (CLI) for real-time interaction. Upon successful initiation, the admin user is prompted with admin-cli &gt; to enter commands. The input is parsed into a vector of strings, where each string represents a command or argument.
+</code></pre>
+<p>###   Command Processing:</p>
+<p>####   The CLI supports multiple commands:</p>
+<pre><code>  - stop: Terminates the admin panel.
+  - connect: Establishes a login to the server with credentials.
+  - listconnecteduser: Retrieves a list of currently connected users.
+  - getuserinfo &lt;userid&gt;: Obtains information about a specific user by user ID.
+  - banuser &lt;userID&gt;: Issues a ban on a user, preventing access to the server.
+  - debanuser &lt;userIP&gt;: Lifts a ban from a user, restoring server access.
+  - listuserbanned: Lists all users who have been banned.
+  - getinforoom &lt;roomID&gt;: Fetches details about a particular room using its ID.
+  - listroom: Lists all available rooms on the server.
+  - allpaquets: Requests the total number of packets managed by the server.
+  - setmaxroom &lt;newMax&gt;: Sets the maximum allowed rooms on the server, with constraints for valid range checks.
+</code></pre>
               
             </div>
           </div><footer>

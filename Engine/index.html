@@ -5,15 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>About - Rtype_Documentation</title>
+    <title>BJEngine - Rtype_Documentation</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "About";
-        var mkdocs_page_input_path = "About.md";
+        var mkdocs_page_name = "BJEngine";
+        var mkdocs_page_input_path = "Engine.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -51,14 +51,22 @@
                 <li class="toctree-l1"><a class="reference internal" href="../How_to_use_Engine_based_on_ECS/">How to use Engine based on ECS</a>
                 </li>
               </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Engine/">BJEngine</a>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">BJEngine</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#rendering">Rendering</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#input-handling">Input Handling</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#audio">Audio</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#physics">Physics</a>
+    </li>
+    </ul>
                 </li>
               </ul>
-              <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href="./">About</a>
-    <ul class="current">
-    </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../About/">About</a>
                 </li>
               </ul>
               <ul>
@@ -83,7 +91,7 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
-      <li class="breadcrumb-item active">About</li>
+      <li class="breadcrumb-item active">BJEngine</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -92,31 +100,38 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="team-information">Team Information</h1>
-<p>The team that works on this project is made up of 5 members:</p>
-<ul>
-<li>
-<p>Aurel AZON</p>
-</li>
-<li>
-<p>Fidélia Sowakoude</p>
-</li>
-<li>
-<p>Fitzgerald ADECHIAN</p>
-</li>
-<li>
-<p>Milohoue AHO</p>
-</li>
-<li>
-<p>Sedjro HOUNDONOUGBO</p>
-</li>
-</ul>
+                <h1 id="what-is-bjengine">WHAT IS BJENGINE</h1>
+<p>Bjengine is a 2d engine written in C++ based on ECS, designed for the creation of 2d video games. It offers various modules such as: audio, network, 2d rendering, physics, etc.</p>
+<h2 id="rendering">Rendering</h2>
+<p>The engine provides a basic rendering system with support for 2D graphics. It can render sprites, textures, and text.</p>
+<h2 id="input-handling">Input Handling</h2>
+<p>Capture and respond to user input including keyboard, mouse, and gamepad events.</p>
+<h2 id="audio">Audio</h2>
+<p>Play sound effects and background music using the built-in audio system.</p>
+<h2 id="physics">Physics</h2>
+<p>Basic support for 2D physics simulations, collisions, and interactions.</p>
+<h1 id="how-it-works">HOW IT WORKS</h1>
+<h2 id="initializing-the-engine">Initializing the Engine</h2>
+<p>Initialize the engine by setting up the game window, configuring rendering settings, and starting the game loop.</p>
+<h2 id="creating-game-objects">Creating Game Objects</h2>
+<p>Define game objects using entities and attach relevant components to them.</p>
+<h2 id="controlling-game-loop">Controlling Game Loop</h2>
+<p>Handle game logic, rendering, and input processing within the game loop.</p>
+<h1 id="components">Components</h1>
+<h2 id="transform">Transform</h2>
+<p>The transform component defines the position, rotation, and scale of a game object.</p>
+<h2 id="spriterenderer">SpriteRenderer</h2>
+<p>SpriteRenderer renders sprites and textures attached to game objects.</p>
+<h2 id="collider">Collider</h2>
+<p>Collider components define the collision boundaries for game objects.</p>
+<h2 id="audiosource">AudioSource</h2>
+<p>Attach audio sources to game objects for sound playback.</p>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../Engine/" class="btn btn-neutral float-left" title="BJEngine"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../Client/" class="btn btn-neutral float-right" title="Client">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../How_to_use_Engine_based_on_ECS/" class="btn btn-neutral float-left" title="How to use Engine based on ECS"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../About/" class="btn btn-neutral float-right" title="About">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -139,10 +154,10 @@
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../Engine/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../How_to_use_Engine_based_on_ECS/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../Client/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../About/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
