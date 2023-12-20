@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Containerization - AREA_Documentation</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Containerization";
+        var mkdocs_page_input_path = "containerization.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> AREA_Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Objectifs/">Goals</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Services/">Services</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Installation/">Installation</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Process/">Process & Communication</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Mobile/">Mobile & Web Interface</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Server/">Server-Backend</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../technologies/">Technologies</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../deployment/">Deployment</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">Containerization</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#services">Services</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#1-mysql-service">1. MySQL Service</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#testing-mysql-service">Testing MySQL Service</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#2-myserver-service">2. MyServer Service</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#testing-myserver-service">Testing MyServer Service</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#3-myapp-service">3. MyApp Service</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#testing-myapp-service">Testing MyApp Service</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#4-myweb-service">4. MyWeb Service</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#testing-myweb-service">Testing MyWeb Service</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#volumes">Volumes</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#potential-installations">Potential Installations</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#running-the-docker-compose-file">Running the Docker Compose File</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../dockerisation/">Dockerization</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../About/">About</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">AREA_Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Containerization</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="documentation-for-docker-compose-file">Documentation for Docker Compose File</h1>
+<p>This section explains the Docker Compose file, which is used to define and run multi-container Docker applications. Here, we have a setup with four services: <code>mysql</code>, <code>myserver</code>, <code>myapp</code>, and <code>myweb</code>. Below is a detailed explanation of each part and the commands to test and potentially install necessary components.</p>
+<h2 id="services">Services</h2>
+<h3 id="1-mysql-service">1. MySQL Service</h3>
+<ul>
+<li><strong>Image:</strong> The service uses the official MySQL image version 8.0.</li>
+<li><strong>Command:</strong> It's configured to use <code>mysql_native_password</code> for authentication.</li>
+<li><strong>Restart Policy:</strong> Set to always restart the container if it stops.</li>
+<li><strong>Ports:</strong> Maps port 3306 of the container to port 3306 on the host.</li>
+<li><strong>Exposed Ports:</strong> Exposes port 3306 inside the Docker network.</li>
+<li><strong>Environment Variables:</strong></li>
+<li><code>MYSQL_ROOT_PASSWORD</code>: Sets the root password to 'gaius155'.</li>
+<li><code>MYSQL_DATABASE</code>: Creates a database named 'area'.</li>
+<li><code>MYSQL_USER</code>: Sets the default user to 'root'.</li>
+</ul>
+<p>But it's considered as bad habits to let alls creds in clear text inside any kind of config files, so you should add them in .env to have safe practice</p>
+<h4 id="testing-mysql-service">Testing MySQL Service</h4>
+<p>To test the MySQL service, you would typically connect to the MySQL server using a MySQL client.</p>
+<pre><code class="language-bash">mysql -h 127.0.0.1 -u root -pgaius155
+</code></pre>
+<h3 id="2-myserver-service">2. MyServer Service</h3>
+<ul>
+<li><strong>Build Context:</strong> Specifies the build context as <code>./server</code> with a Dockerfile.</li>
+<li><strong>Dependency:</strong> Depends on the MySQL service.</li>
+<li><strong>Volumes:</strong></li>
+<li>Maps <code>node_modules</code> folder.</li>
+<li>Maps the local <code>./server</code> directory to <code>/app</code> in the container.</li>
+<li><strong>Ports:</strong> Maps port 8080 of the container to port 8080 on the host.</li>
+<li><strong>Exposed Ports:</strong> Exposes port 8080 inside the Docker network.</li>
+</ul>
+<h4 id="testing-myserver-service">Testing MyServer Service</h4>
+<p>Testing this service involves making requests to the server, assuming it's a web server running on port 8080.</p>
+<pre><code class="language-bash">curl http://localhost:8080
+</code></pre>
+<h3 id="3-myapp-service">3. MyApp Service</h3>
+<ul>
+<li><strong>Build Context:</strong> Uses <code>./mobile</code> as the build context with a Dockerfile.</li>
+<li><strong>Dependency:</strong> Depends on the MyServer service.</li>
+<li><strong>Volumes:</strong></li>
+<li>Maps <code>node_modules</code> folder.</li>
+<li>Maps the local <code>./mobile</code> directory to <code>/app</code> in the container.</li>
+<li>Maps a volume named <code>apk</code> to <code>/usr/src/app/apk/</code> with read-write access.</li>
+<li><strong>Exposed Ports:</strong> None specifically mentioned.</li>
+</ul>
+<h4 id="testing-myapp-service">Testing MyApp Service</h4>
+<p>Testing would depend on the nature of the application. If it’s a web app, accessing it via a browser might be appropriate.</p>
+<h3 id="4-myweb-service">4. MyWeb Service</h3>
+<ul>
+<li><strong>Build Context:</strong> Uses <code>./web</code> as the build context with a Dockerfile.</li>
+<li><strong>Ports:</strong> Maps port 8081 of the container to port 8081 on the host.</li>
+<li><strong>Exposed Ports:</strong> Exposes port 8081 inside the Docker network.</li>
+<li><strong>Dependency:</strong> Depends on the MyServer service.</li>
+<li><strong>Volumes:</strong></li>
+<li>Maps <code>node_modules</code> folder.</li>
+<li>Maps the local <code>./web</code> directory to <code>/app</code> in the container.</li>
+</ul>
+<h4 id="testing-myweb-service">Testing MyWeb Service</h4>
+<p>Similar to MyServer, you can test this by making HTTP requests:</p>
+<pre><code class="language-bash">curl http://localhost:8081
+</code></pre>
+<h2 id="volumes">Volumes</h2>
+<ul>
+<li><strong>apk:</strong> A named volume for storing APK files, used by the <code>myapp</code> service.</li>
+</ul>
+<h2 id="potential-installations">Potential Installations</h2>
+<p>Before running this Docker Compose file, ensure that you have the following installed:</p>
+<ul>
+<li>Docker: To run containers.</li>
+<li>Docker Compose: To manage multi-container applications.</li>
+</ul>
+<h2 id="running-the-docker-compose-file">Running the Docker Compose File</h2>
+<p>To start the services defined in this file, use the following command:</p>
+<pre><code class="language-bash">docker-compose up
+</code></pre>
+<p>This command builds, (re)creates, starts, and attaches to containers for a service. To stop and remove the containers, networks, and volumes, use:</p>
+<pre><code class="language-bash">docker-compose down
+</code></pre>
+<p>This Docker Compose file sets up a robust environment with a MySQL database, a server, a mobile application, and a web interface, each running in its own container, interconnected and configured to work together.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../deployment/" class="btn btn-neutral float-left" title="Deployment"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../dockerisation/" class="btn btn-neutral float-right" title="Dockerization">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../deployment/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../dockerisation/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
