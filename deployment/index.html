@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Deployment - AREA_Documentation</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Deployment";
+        var mkdocs_page_input_path = "deployment.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> AREA_Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Objectifs/">Goals</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Services/">Services</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Installation/">Installation</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Process/">Process & Communication</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Mobile/">Mobile & Web Interface</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Server/">Server-Backend</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../technologies/">Technologies</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">Deployment</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#script-overview">Script Overview</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#color-definitions">Color Definitions</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#functions">Functions</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#1-delete_containers">1. delete_containers</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#2-deploy_containers">2. deploy_containers</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#3-stop_containers">3. stop_containers</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#4-prune_containers">4. prune_containers</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#5-shell_containers">5. shell_containers</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#6-list_containers">6. list_containers</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#7-show_help">7. show_help</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#command-line-options">Command-Line Options</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#using-the-script">Using the Script</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#prerequisites">Prerequisites</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#conclusion">Conclusion</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../containerization/">Containerization</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../dockerisation/">Dockerization</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../About/">About</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">AREA_Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Deployment</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="documentation-for-custom-deployment-docker-container-management">Documentation for custom Deployment : Docker Container Management</h1>
+<p>This Bash script provides a convenient way to manage Docker containers through various command-line options. It's designed to simplify common Docker tasks such as deploying, stopping, and removing containers. Below is a detailed explanation of each part of the script and the associated commands.</p>
+<h2 id="script-overview">Script Overview</h2>
+<p>The script starts by defining color codes for different types of output messages. It then declares several functions, each corresponding to a specific Docker management task. The script ends with a <code>while</code> loop to parse command-line arguments and execute the appropriate functions.</p>
+<h2 id="color-definitions">Color Definitions</h2>
+<ul>
+<li><strong>Colors:</strong> Various colors like GREEN, BLUE, PURPLE, WHITE, RED, ORANGE, and YELLOW are defined for formatting the output.</li>
+</ul>
+<h2 id="functions">Functions</h2>
+<h3 id="1-delete_containers">1. <code>delete_containers</code></h3>
+<ul>
+<li><strong>Purpose:</strong> Removes all Docker containers.</li>
+<li><strong>Command:</strong> <code>docker rm $(docker ps -aq)</code></li>
+<li><strong>Output:</strong> Red color text indicating the deletion of containers.</li>
+</ul>
+<h3 id="2-deploy_containers">2. <code>deploy_containers</code></h3>
+<ul>
+<li><strong>Purpose:</strong> Deploys all Docker containers using Docker Compose.</li>
+<li><strong>Command:</strong> <code>docker-compose up -d</code></li>
+<li><strong>Output:</strong> Green color text indicating the deployment of containers.</li>
+</ul>
+<h3 id="3-stop_containers">3. <code>stop_containers</code></h3>
+<ul>
+<li><strong>Purpose:</strong> Stops all running Docker containers.</li>
+<li><strong>Command:</strong> <code>docker stop $(docker ps -aq)</code></li>
+<li><strong>Output:</strong> Blue color text indicating the stopping of containers.</li>
+</ul>
+<h3 id="4-prune_containers">4. <code>prune_containers</code></h3>
+<ul>
+<li><strong>Purpose:</strong> Stops and removes all Docker containers.</li>
+<li><strong>Command:</strong> Combines the commands from <code>stop_containers</code> and <code>delete_containers</code>.</li>
+<li><strong>Output:</strong> Purple color text indicating the pruning of containers.</li>
+</ul>
+<h3 id="5-shell_containers">5. <code>shell_containers</code></h3>
+<ul>
+<li><strong>Purpose:</strong> Opens a Bash shell in a specified container.</li>
+<li><strong>Command:</strong> <code>docker exec -it $1 /bin/bash</code></li>
+<li><strong>Output:</strong> Orange color text indicating the spawning of a shell in a container.</li>
+</ul>
+<h3 id="6-list_containers">6. <code>list_containers</code></h3>
+<ul>
+<li><strong>Purpose:</strong> Lists all Docker containers.</li>
+<li><strong>Command:</strong> <code>docker ps -a</code></li>
+<li><strong>Output:</strong> Yellow color text showing all available containers.</li>
+</ul>
+<h3 id="7-show_help">7. <code>show_help</code></h3>
+<ul>
+<li><strong>Purpose:</strong> Displays usage instructions for the script.</li>
+<li><strong>Output:</strong> Descriptions of all available script options.</li>
+</ul>
+<h2 id="command-line-options">Command-Line Options</h2>
+<ul>
+<li><code>--delete</code>: Executes <code>delete_containers</code>.</li>
+<li><code>--deploy</code>: Executes <code>deploy_containers</code>.</li>
+<li><code>--stop</code>: Executes <code>stop_containers</code>.</li>
+<li><code>--prune</code>: Executes <code>prune_containers</code>.</li>
+<li><code>--shell</code>: Executes <code>shell_containers</code> with a specified container.</li>
+<li><code>--list</code>: Executes <code>list_containers</code>.</li>
+<li><code>--help</code>: Displays help information with <code>show_help</code>.</li>
+</ul>
+<h2 id="using-the-script">Using the Script</h2>
+<p>To use the script, you can invoke it with one of the defined options. For example:</p>
+<pre><code class="language-bash">./script.sh --list
+</code></pre>
+<p>This command will list all running Docker containers.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>Before using this script, ensure that Docker and Docker Compose are installed on your system.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>This script is a handy tool for managing Docker containers, offering a simplified interface for common Docker commands. It enhances user experience by providing easy-to-understand, color-coded outputs and a straightforward command-line interface.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../technologies/" class="btn btn-neutral float-left" title="Technologies"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../containerization/" class="btn btn-neutral float-right" title="Containerization">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../technologies/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../containerization/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
