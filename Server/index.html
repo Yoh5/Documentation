@@ -116,6 +116,162 @@
 <ul>
 <li><strong>Link to the Swagger</strong>: <code>http://localhost:8080/api-docs/#</code> on the machine where the Server is.</li>
 </ul>
+<h1 id="express-server-component-documentation-main-application-file">Express Server Component Documentation: Main Application File</h1>
+<p>This documentation describes the main application file of an Express server. The file includes routing for various endpoints, middleware configurations, database interactions, and email sending functionalities.</p>
+<h2 id="overview">Overview</h2>
+<p>The file creates an Express application and configures it with various routes to handle HTTP requests for registration, login, verification, user retrieval, GitHub events, and user deletion. It also configures a nodemailer transporter for sending emails.</p>
+<h2 id="component-structure">Component Structure</h2>
+<h3 id="dependencies-and-initial-setup">Dependencies and Initial Setup</h3>
+<ul>
+<li>express: Web framework for Node.js.</li>
+<li>body-parser: Middleware for parsing request bodies.</li>
+<li>validator: Used for email validation.</li>
+<li>dotenv: Loads environment variables from a .env file.</li>
+<li>cors: Enables Cross-Origin Resource Sharing.</li>
+<li>nodemailer: Allows sending emails.</li>
+<li>port: Server port number from environment variables.</li>
+</ul>
+<h3 id="middleware-configuration">Middleware Configuration</h3>
+<ul>
+<li>CORS is enabled for all routes.</li>
+<li>express.json() and express.urlencoded({extended:false}) are used for request body parsing.</li>
+</ul>
+<h3 id="nodemailer-transporter">Nodemailer Transporter</h3>
+<ul>
+<li>Configured with Gmail service and authentication credentials.</li>
+</ul>
+<h3 id="utility-functions">Utility Functions</h3>
+<ul>
+<li>isEmailValid(email): Validates an email address.</li>
+<li>generateRandomString(length): Generates a random string of specified length.</li>
+</ul>
+<h3 id="routes">Routes</h3>
+<ul>
+<li>GET /: A simple route for testing server responsiveness.</li>
+<li>POST /register: Handles user registration, checks if the email is valid and unique, inserts a new user into the database, and sends a verification email.</li>
+<li>PUT /verify: Verifies user accounts with a token sent via email.</li>
+<li>GET /user: Retrieves all user data.</li>
+<li>POST /git: Placeholder for handling GitHub events.</li>
+<li>DELETE /delete: Deletes a user by ID.</li>
+<li>POST /login: Authenticates a user.</li>
+<li>Additional route for GitHub authentication using a separate router.</li>
+</ul>
+<h3 id="server-listening">Server Listening</h3>
+<ul>
+<li>The application listens on the specified port for incoming requests.</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<ol>
+<li>Ensure all dependencies are installed via npm or yarn.</li>
+<li>Set up environment variables (e.g., database credentials, server port, email credentials) in a .env file.</li>
+<li>Run the server using Node.js:
+   bash
+   node path-to-this-file.js</li>
+</ol>
+<h2 id="example">Example</h2>
+<p>To start the server, navigate to the directory where this file is located and run:</p>
+<p>bash
+node server.js</p>
+<p>Replace server.js with the actual file name if different.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>This Express application file establishes a backend server with multiple endpoints for user management and integration with external services like email and GitHub. The configuration and routes provided form the core of a backend system that could be part of a larger web application.</p>
+<h1 id="mobile">Mobile</h1>
+<h2 id="react-native-login-component-documentation">React Native Login Component Documentation</h2>
+<p>This documentation details a React Native component named Login. This component is designed for a login screen, providing user interface elements for email and password input, options for social media login, and navigation to other screens upon successful login or registration.</p>
+<h2 id="overview_1">Overview</h2>
+<p>The Login component is a functional component that utilizes React's useState hook for managing state. It includes text inputs for email and password, buttons for logging in, and links for social media sign-ins.</p>
+<h2 id="component-structure_1">Component Structure</h2>
+<h3 id="states">States</h3>
+<ul>
+<li>Email: Stores the user's email address.</li>
+<li>password: Stores the user's password.</li>
+</ul>
+<h3 id="functions">Functions</h3>
+<ul>
+<li>checkConnection(mail, pass): This asynchronous function takes email and password as arguments. It makes a POST request to a specified URL (in this case, https://deciding-oyster-probably.ngrok-free.app/login) with the email and password. Depending on the response status, it navigates to the profile screen or shows an alert message.</li>
+<li>moveToProfile(): Navigates to the ListServices screen.</li>
+</ul>
+<h3 id="return-jsx">Return (JSX)</h3>
+<ul>
+<li>Text Input for Email: Takes and updates the email state.</li>
+<li>Text Input for Password: Takes and updates the password state, with secure text entry for privacy.</li>
+<li>Login Button: On press, calls checkConnection with the current states of Email and Password.</li>
+<li>Social Media Login Options: Buttons for Google and Facebook login (functionality to be implemented).</li>
+<li>Navigation to the Register screen.</li>
+</ul>
+<h2 id="styles">Styles</h2>
+<p>The component uses StyleSheet from react-native for styling. Styles are defined for the container, text inputs, buttons, and other text elements, focusing on layout, color, and typography.</p>
+<h2 id="dependencies">Dependencies</h2>
+<ul>
+<li>expo-status-bar: Provides the status bar component.</li>
+<li>react-native-vector-icons/FontAwesome: Used for social media icons.</li>
+</ul>
+<h2 id="usage_1">Usage</h2>
+<p>To use this component in a React Native application:</p>
+<ol>
+<li>Import the Login component.</li>
+<li>Include it in your navigation stack or render it as needed.</li>
+<li>Ensure that the navigation prop is passed if you're using React Navigation for screen transitions.</li>
+</ol>
+<h2 id="example_1">Example</h2>
+<p>jsx
+import React from 'react';
+import Login from './path-to-Login'; // Adjust the import path as needed
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';</p>
+<p>const Stack = createStackNavigator();</p>
+<p>function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Login" component={Login} />
+        {/<em> Other screens </em>/}
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}</p>
+<p>export default App;</p>
+<h1 id="web">WEB</h1>
+<h1 id="react-router-component-documentation-app-component">React Router Component Documentation: App Component</h1>
+<p>This documentation describes the App component in a React application. This component is responsible for setting up the routing for the application using React Router. It also integrates Google OAuth for the login functionality.</p>
+<h2 id="overview_2">Overview</h2>
+<p>The App component is a functional component that uses BrowserRouter and Routes from react-router-dom to define a series of Route components. Each route maps a path in the URL to a specific React component, representing a page in the application.</p>
+<h2 id="component-structure_2">Component Structure</h2>
+<h3 id="routes_1">Routes</h3>
+<ul>
+<li>/: The root path is linked to the LoadingPage component.</li>
+<li>/login: Renders the LogInPage component within a GoogleOAuthProvider context.</li>
+<li>/signup: Mapped to the SignUpPage component.</li>
+<li>/token: Displays the TokenPage.</li>
+<li>/home: Links to the HomePage.</li>
+<li>/applets: Routes to the AppletPage.</li>
+<li>/areas: Directs to the AreaPage.</li>
+<li>/profil: Opens the ProfilPage.</li>
+<li>/spotify: Shows the SpotifyPage.</li>
+<li>*: A wildcard route that catches all other paths and directs to NotFoundPage.</li>
+</ul>
+<h3 id="google-oauth-provider">Google OAuth Provider</h3>
+<ul>
+<li>For the login page, the GoogleOAuthProvider component from @react-oauth/google wraps the LogInPage. It requires a clientId which is specific to the application's OAuth credentials set up in Google Cloud Platform.</li>
+</ul>
+<h2 id="usage_2">Usage</h2>
+<p>To use this component:</p>
+<ol>
+<li>Ensure you have react-router-dom and @react-oauth/google installed.</li>
+<li>Place the App component at the root of your React application.</li>
+</ol>
+<h2 id="example_2">Example</h2>
+<p>Here's how you might use App in the main entry file of a React application:</p>
+<p>jsx
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App'; // Adjust the import path as needed</p>
+<p>ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+);</p>
               
             </div>
           </div><footer>
